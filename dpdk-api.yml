@@ -1,0 +1,315 @@
+schemes:
+  - http
+swagger: '2.0'
+info:
+  description: DPDK Configure API文档
+  title: DPDK Configure API
+  contact: {}
+  version: '1.0'
+host: 10.121.146.10:8000
+
+  
+securityDefinitions:
+  apikey:
+    type: apiKey
+    name: X-Auth-Token
+    in: header
+    
+paths:
+  '/hosts/{host_id}/nics/{nic_id}/dpdkconfigures':
+    get:
+      tags:
+        - "DPDK"
+      description: "获取当前HOST的DPDK驱动信息"
+      summary: "获取当前HOST的DPDK驱动信息"
+      operationId: GetDpdkConfiguration
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json      
+      parameters:
+        - type: string
+          description: HOST ID
+          name: host_id
+          in: path
+          required: true
+        - type: string
+          description: NIC ID
+          name: nic_id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+           $ref: '#/definitions/response.host_nic_dpdk'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '405':
+          description: Invalid input
+      security:
+        - apikey: []
+    post:
+      tags:
+        - "DPDK"
+      description: "绑定当前PF网卡为DPDK驱动"
+      summary: "绑定当前PF网卡为DPDK驱动"
+      operationId: CreateDpdkConfiguration
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json      
+      parameters:
+        - type: string
+          description: HOST ID
+          name: host_id
+          in: path
+          required: true
+        - type: string
+          description: NIC ID
+          name: nic_id
+          in: path
+          required: true
+        - description: 绑定当前PF网卡为DPDK驱动的请求
+          name: host_nic_dpdk
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/request.host_nic_dpdk'
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+           $ref: '#/definitions/response.host_nic_dpdk'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '405':
+          description: Invalid input
+      security:
+        - apikey: []
+        
+  '/hosts/{host_id}/nics/{nic_id}/dpdkconfigures/{nics_id}':  
+    put:
+      tags:
+        - "DPDK"
+      description: "更新当前绑定PF网卡为DPDK驱动"
+      summary: "更新当前绑定PF网卡为DPDK驱动"
+      operationId: UpdateDpdkConfiguration
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json      
+      parameters:
+        - type: string
+          description: HOST ID
+          name: host_id
+          in: path
+          required: true
+        - type: string
+          description: NIC ID
+          name: nic_id
+          in: path
+          required: true
+        - type: string
+          description: nics id信息
+          name: nics_id
+          in: path
+          required: true
+        - description: 绑定当前PF网卡为DPDK驱动的请求
+          name: update_host_nic_dpdk
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/request.update_host_nic_dpdk'
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+           $ref: '#/definitions/response.host_nic_dpdk'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '405':
+          description: Invalid input
+      security:
+        - apikey: []
+    
+    get:
+      tags:
+        - "DPDK"
+      description: "获取当前HOST指定的DPDK驱动信息"
+      summary: "获取当前HOST指定的DPDK驱动信息"
+      operationId: GetOneDpdkConfiguration
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json      
+      parameters:
+        - type: string
+          description: HOST ID
+          name: host_id
+          in: path
+          required: true
+        - type: string
+          description: NIC ID
+          name: nic_id
+          in: path
+          required: true
+        - type: string
+          description: nics id信息
+          name: nics_id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+           $ref: '#/definitions/response.host_nic_dpdk'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '405':
+          description: Invalid input
+      security:
+        - apikey: []
+        
+    delete:
+      tags:
+        - "DPDK"
+      description: "删除当前绑定PF网卡为DPDK驱动"
+      summary: "删除当前绑定PF网卡为DPDK驱动"
+      operationId: DeleteDpdkConfiguration
+      consumes:
+        - application/xml
+        - application/json
+      produces:
+        - application/xml
+        - application/json      
+      parameters:
+        - type: string
+          description: HOST ID
+          name: host_id
+          in: path
+          required: true
+        - type: string
+          description: NIC ID
+          name: nic_id
+          in: path
+          required: true
+        - type: string
+          description: nics id信息
+          name: nics_id
+          in: path
+          required: true
+      responses:
+        '204':
+          description: 请求成功返回
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '405':
+          description: Invalid input
+      security:
+        - apikey: []
+    
+            
+definitions:
+  request.host_nic_dpdk:
+    type: object
+    properties:
+      dpdk_configure:
+        $ref: '#/definitions/request.dpdk'
+        description: DPDK请求详情
+  request.dpdk:      
+        type: object
+        required:
+        - pmd_count
+        - ovs_use
+        - bind_driver
+        properties:
+          pmd_count:
+            type: integer
+            description: "设置dpdk轮询收包驱动个数"
+            enum:
+            - 1
+            - 2
+            - 3
+            - 4
+          ovs_use:
+            type: boolean
+            description: "是否允许openvswitch使用"
+            default: "True"
+          bind_driver:
+            type: string
+            description: "绑定驱动名称"
+            default: "vfio-pci"
+            
+  
+  request.update_host_nic_dpdk:
+    type: object
+    properties:
+      dpdk_configure:
+        $ref: '#/definitions/request.update_dpdk'
+        description: DPDK请求详情
+  request.update_dpdk:      
+        type: object
+        required:
+        - pmd_count
+        properties:
+          pmd_count:
+            type: integer
+            description: "设置dpdk轮询收包驱动个数"
+            enum:
+            - 1
+            - 2
+            - 3
+            - 4
+  
+  response.host_nic_dpdk:
+    type: object
+    properties:
+      dpdk_configure:
+        $ref: '#/definitions/response.dpdk'
+  response.dpdk:      
+        type: object
+        properties:
+          pmd_count:
+            type: integer
+            description: "设置dpdk轮询收包驱动个数"
+            enum:
+            - 1
+            - 2
+            - 3
+            - 4
+          ovs_use:
+            type: boolean
+            description: "是否允许openvswitch使用"
+            default: "True"
+          bind_driver:
+            type: string
+            description: "绑定驱动名称"
+            default: "vfio-pci"
+          host_id:
+            type: string
+            description: "Host ID信息"
+          nics_id:
+            type: string
+            description: "网卡的pci number信息,根据此值可以查询某一个DPDP网卡驱动"
+            default: "pci_0000_00_03_0"
+            
+  

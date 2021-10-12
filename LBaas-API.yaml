@@ -1,0 +1,1673 @@
+schemes:
+  - http
+swagger: '2.0'
+info:
+  description: 负载均衡服务文档
+  title: LBaas API
+  contact: {}
+  version: '1.0'
+host: 10.121.146.10:8000
+basePath: /net/lb/v1
+tags:
+  - name: "loadbalancer"
+securityDefinitions:
+  apikey:
+    type: apiKey
+    name: X-Auth-Token
+    in: header
+    
+    
+paths:
+  '/loadbalancers':
+    get:
+      description: 列出所有的负载均衡器
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "loadbalancer"
+      summary: 列出所有的负载均衡器
+      operationId: listLoadbalancerGet
+      security:
+        - apikey: []
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Loadbalancers'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+    post:
+      description: 创建负载均衡器
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "loadbalancer"
+      summary: 创建负载均衡器
+      operationId: createLoadbalancerPOST
+      security:
+        - apikey: []
+      parameters:
+        - description: 创建负载均衡器请求
+          name: CreateLoadbalancersRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/request.CreateLoadbalancersRequest'
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Loadbalancers'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '409':
+          description: 当前操作与此资源上的另一个操作冲突
+          schema:
+            type: string
+  '/loadbalancers/{loadbalancer_id}':
+    get:
+      description: 列出所有的负载均衡器
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "loadbalancer"
+      summary: 获取指定负载均衡器
+      operationId: getLoadbalancerGet
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 负载均衡ID
+          name: loadbalancer_id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Loadbalancers'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+    put:
+      description: 修改指定负载均衡器
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "loadbalancer"
+      summary: 修改指定负载均衡器
+      operationId: putLoadbalancerPUT
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 负载均衡ID
+          name: loadbalancer_id
+          in: path
+          required: true
+        - description: 修改负载均衡器请求
+          name: PutLoadbalancersRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/request.PutLoadbalancersRequest'
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Loadbalancers'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '409':
+          description: 当前操作与此资源上的另一个操作冲突
+          schema:
+            type: string
+    delete:
+      description: 删除指定的负载均衡器
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "loadbalancer"
+      summary: 删除指定的负载均衡器
+      operationId: deleteLoadbalancerDELETE
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 负载均衡ID
+          name: loadbalancer_id
+          in: path
+          required: true
+      responses:
+        '204':
+          description: 请求成功返回
+          schema:
+            type: string
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '404':
+          description: 找不到要访问的资源
+          schema:
+            type: string
+            
+  
+  '/listeners':
+    get:
+      description: 列出所有的监听器列表
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "listeners"
+      summary: 列出所有的监听器
+      operationId: listListernersGet
+      security:
+        - apikey: []
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Listeners'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+    post:
+      description: 创建监听器
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "listeners"
+      summary: 创建监听器
+      operationId: createListernersPOST
+      security:
+        - apikey: []
+      parameters:
+        - description: 创建监听器请求
+          name: CreateListernersRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/request.CreateListenersRequest'
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Listeners'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '409':
+          description: 当前操作与此资源上的另一个操作冲突
+          schema:
+            type: string
+  '/listeners/{listeners_id}':
+    get:
+      description: 列出所有的监听器
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "listeners"
+      summary: 获取指定监听器
+      operationId: getListernerGet
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 监听器ID
+          name: listeners_id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Listeners'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+    put:
+      description: 修改指定监听器
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "listeners"
+      summary: 修改指定监听器
+      operationId: putListernerPUT
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 监听器ID
+          name: listeners_id
+          in: path
+          required: true
+        - description: 修改监听器请求
+          name: PutListernersRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/request.PutListenersRequest'
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Listeners'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '409':
+          description: 当前操作与此资源上的另一个操作冲突
+          schema:
+            type: string
+    delete:
+      description: 删除指定的监听器
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "listeners"
+      summary: 删除指定的监听器
+      operationId: deleteListernersDELETE
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 监听器ID
+          name: listeners_id
+          in: path
+          required: true
+      responses:
+        '204':
+          description: 请求成功返回
+          schema:
+            type: string
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '404':
+          description: 找不到要访问的资源
+          schema:
+            type: string
+            
+            
+  ##pools
+  '/pools':
+    get:
+      description: 列出所有资源池列表
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "pools"
+      summary: 列出所有的资源池
+      operationId: listPoolsGet
+      security:
+        - apikey: []
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Pools'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+    post:
+      description: 创建资源池
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "pools"
+      summary: 创建资源池
+      operationId: createPoolsPOST
+      security:
+        - apikey: []
+      parameters:
+        - description: 创建资源池请求
+          name: CreatePoolsRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/request.CreatePoolsRequest'
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Pools'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '409':
+          description: 当前操作与此资源上的另一个操作冲突
+          schema:
+            type: string
+  '/pools/{pools_id}':
+    get:
+      description: 列出所有的资源池
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "pools"
+      summary: 获取指定资源池
+      operationId: getPoolsGet
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 资源池ID
+          name: pools_id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Pools'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+    put:
+      description: 修改指定资源池
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "pools"
+      summary: 修改指定资源池
+      operationId: putPoolsPUT
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 资源池ID
+          name: pools_id
+          in: path
+          required: true
+        - description: 修改资源池请求
+          name: PutListernersRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/request.PutPoolsRequest'
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Pools'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '409':
+          description: 当前操作与此资源上的另一个操作冲突
+          schema:
+            type: string
+    delete:
+      description: 删除指定的资源池
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "pools"
+      summary: 删除指定的资源池
+      operationId: deletePoolsDELETE
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 资源池ID
+          name: pools_id
+          in: path
+          required: true
+      responses:
+        '204':
+          description: 请求成功返回
+          schema:
+            type: string
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '404':
+          description: 找不到要访问的资源
+          schema:
+            type: string
+            
+            
+  
+  ##member
+  '/pools/{pools_id}/members':
+    get:
+      description: 列出所有后端成员列表
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "members"
+      summary: 列出所有的后端成员
+      operationId: listMembersGet
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 资源池ID
+          name: pools_id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Members'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+    post:
+      description: 创建后端成员
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "members"
+      summary: 创建后端成员
+      operationId: createMembersPOST
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 资源池ID
+          name: pools_id
+          in: path
+          required: true
+        - description: 创建资源池请求
+          name: CreateMembersRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/request.CreateMembersRequest'
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Members'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '409':
+          description: 当前操作与此资源上的另一个操作冲突
+          schema:
+            type: string
+  '/pools/{pools_id}/members/{members_id}':
+    get:
+      description: 列出指定的后端成员
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "members"
+      summary: 获取指定后端成员
+      operationId: getMembersGet
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 后端成员ID
+          name: members_id
+          in: path
+          required: true
+        - type: string
+          description: 资源池ID
+          name: pools_id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Pools'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+    put:
+      description: 修改指定后端成员
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "members"
+      summary: 修改指定后端成员
+      operationId: putMembersPUT
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 资源池ID
+          name: pools_id
+          in: path
+          required: true
+        - type: string
+          description: 后端成员ID
+          name: members_id
+          in: path
+          required: true
+        - description: 修改资源池请求
+          name: PutListernersRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/request.PuMembersRequest'
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.Pools'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '409':
+          description: 当前操作与此资源上的另一个操作冲突
+          schema:
+            type: string
+    delete:
+      description: 删除指定的后端成员
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "members"
+      summary: 删除指定的后端成员
+      operationId: deleteMembersDELETE
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 后端成员ID
+          name: members_id
+          in: path
+          required: true
+        - type: string
+          description: 资源池ID
+          name: pools_id
+          in: path
+          required: true
+      responses:
+        '204':
+          description: 请求成功返回
+          schema:
+            type: string
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '404':
+          description: 找不到要访问的资源
+          schema:
+            type: string
+            
+            
+  
+  ##healthcheck
+  '/healthmonitors':
+    get:
+      description: 列出所有后端成员列表
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "healthmonitors"
+      summary: 列出所有的后端成员
+      operationId: listHealthChecksGet
+      security:
+        - apikey: []
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.HealthChecks'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+    post:
+      description: 创建后端成员
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "healthmonitors"
+      summary: 创建后端成员
+      operationId: createHealthChecksPOST
+      security:
+        - apikey: []
+      parameters:
+        - description: 创建资源池请求
+          name: CreateHealthChecksRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/request.CreateHealthChecksRequest'
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.HealthChecks'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '409':
+          description: 当前操作与此资源上的另一个操作冲突
+          schema:
+            type: string
+  '/healthmonitors/{healthmonitors_id}':
+    get:
+      description: 列出指定的后端成员
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "healthmonitors"
+      summary: 获取指定后端成员
+      operationId: getHealthChecksGet
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 后端成员ID
+          name: healthmonitors_id
+          in: path
+          required: true
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.HealthChecks'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+    put:
+      description: 修改指定后端成员
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "healthmonitors"
+      summary: 修改指定后端成员
+      operationId: putHealthChecksPUT
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 后端成员ID
+          name: healthmonitors_id
+          in: path
+          required: true
+        - description: 修改资源池请求
+          name: PutHealthChecksRequest
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/request.PuHealthChecksRequest'
+      responses:
+        '200':
+          description: 请求成功返回
+          schema:
+            $ref: '#/definitions/response.SimpleResponse_model.HealthChecks'
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '409':
+          description: 当前操作与此资源上的另一个操作冲突
+          schema:
+            type: string
+    delete:
+      description: 删除指定的后端成员
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - "healthmonitors"
+      summary: 删除指定的后端成员
+      operationId: deleteHealthChecksDELETE
+      security:
+        - apikey: []
+      parameters:
+        - type: string
+          description: 后端成员ID
+          name: healthmonitors_id
+          in: path
+          required: true
+      responses:
+        '204':
+          description: 请求成功返回
+          schema:
+            type: string
+        '400':
+          description: 请求body中有参数错误
+          schema:
+            type: string
+        '401':
+          description: 未授权
+          schema:
+            type: string
+        '403':
+          description: 当前用户禁止访问
+          schema:
+            type: string
+        '404':
+          description: 找不到要访问的资源
+          schema:
+            type: string
+  
+  
+  
+            
+            
+definitions:
+  request.CreateLoadbalancersRequest:
+    type: object
+    properties:
+      loadbalancers:
+        $ref: '#/definitions/request.Loadbalancers'
+        description: 负载均衡器详情
+        
+  
+  request.Loadbalancers:
+    type: object
+    required:
+    - vip_subnet_id
+    properties:
+      project_id:
+        type: string
+        description: 项目ID
+      vip_subnet_id:
+        type: string
+        description: 负载均衡器集群子网段
+      name:
+        type: string
+        description: 用户名
+  response.SimpleResponse_model.Loadbalancers:
+    type: object
+    properties:
+      loadbalancers:
+        items:
+          $ref: '#/definitions/Loadbalancers'
+        description: 负载均衡器详情
+        type: array
+  Loadbalancers:
+    type: object
+    properties:
+      id:
+        type: string
+        description: 负载均衡器的ID
+      project_id:
+        type: string
+        description: 项目ID
+      vip_subnet_id:
+        type: string
+        description: 负载均衡器集群子网段
+      vip_address:
+        type: string
+        description: 负载均衡器集群地址
+        default: '192.168.100.10'
+      vip_network_id:
+        type: string
+        description: 负载均衡器集群网络地址
+      name:
+        type: string
+        description: 用户名
+      operating_status:
+        type: string
+        enum:
+        - 'ONLINE'
+        - 'ERROR'
+        - 'PENDING'
+        description: 操作状态，包括"ONLINE、 ERROR、 PENDING"
+      listeners:
+        items:
+          $ref: '#/definitions/respons_listeners'
+        description: 负载均衡返回监听器信息
+        type: array
+      pools:
+        items:
+          $ref: '#/definitions/respons_pools'
+        description: 负载均衡返回资源池信息
+        type: array
+        
+  
+  request.PutLoadbalancersRequest:
+    type: object
+    properties:
+      loadbalancers:
+        $ref: '#/definitions/request.PutLoadbalancers'
+        description: 负载均衡器详情
+  request.PutLoadbalancers:
+    type: object
+    properties:
+      name:
+        type: string
+        description: 用户名
+      description:
+        type: string
+        description: 描述信息
+  
+  
+  respons_listeners:
+    type: object
+    properties:
+      id:
+        type: string
+        description: 监听器ID信息
+  respons_pools:
+    type: object
+    properties:
+      id:
+        type: string
+        description: 资源池ID信息
+  respons_members:
+    type: object
+    properties:
+      id:
+        type: string
+        description: 后端成员ID信息
+        
+  session_persistence:
+    type: object
+    properties:
+      cookie_name:
+        type: string
+        description: cooke名称
+      type:
+        type: string
+        description: 会话保持类型
+        default: "SOURCE_IP"
+    
+  
+  
+  
+  ##listeners
+  request.CreateListenersRequest:
+    type: object
+    properties:
+      listeners:
+        $ref: '#/definitions/request.Listeners'
+        description: 监听器详情
+  
+  request.Listeners:
+    type: object
+    required:
+    - protocol
+    - protocol_port
+    - loadbalancer_id
+    properties:
+      project_id:
+        type: string
+        description: 项目ID
+      protocol:
+        type: string
+        description: 监听器监听协议
+        default: 'TCP'
+      name:
+        type: string
+        description: 用户名
+      protocol_port:
+        type: string
+        description: 监听器监听端口
+        default: '80'
+      loadbalancer_id:
+        type: string
+        description: 负载均衡器ID
+  
+  request.PutListenersRequest:
+    type: object
+    properties:
+      listeners:
+        $ref: '#/definitions/request.PutListeners'
+        description: 监听器详情
+       
+        
+  request.PutListeners:
+    type: object
+    properties:
+      name:
+        type: string
+        description: 用户名
+      description:
+        type: string
+        description: 描述信息
+      timeout_client_data:
+        type: string
+        description: 监听器客户端超时时间
+        default: 50000
+      timeout_member_connect:
+        type: string
+        description: 后端成员的超时时间
+        default: 5000
+      timeout_member_data:
+        type: string
+        description: 后端成员连接不活动的超时时间
+        default: 50000
+      timeout_tcp_inspect:
+        type: string
+        description: 额外数据进行检查的时间
+        default: 0
+      
+      
+      
+  
+  response.SimpleResponse_model.Listeners:
+    type: object
+    properties:
+      listeners:
+        items:
+          $ref: '#/definitions/Listerners'
+        description: 监听器详情
+        type: array
+  Listerners:
+    type: object
+    properties:
+      id:
+        type: string
+        description: 监听器的ID
+      project_id:
+        type: string
+        description: 项目ID
+      protocol:
+        type: string
+        description: 监听器协议类型
+        enum:
+        - 'TCP'
+        - 'UDP'
+        default: 'TCP'
+      protocol_port:
+        type: string
+        description: 监听器监听端口
+        default: '80'
+      provisioning_status:
+        type: string
+        description: 监听器的资源状态
+        enum:
+        - 'ACTIVE'
+        - 'DELETED'
+        - 'ERROR'
+        - 'PENDING_CREATE'
+        - 'PENDING_UPDATE'
+        - 'PENDING_DELETE'
+      default_pool_id:
+        type: string
+        description: 监听器的默认资源池ID
+      name:
+        type: string
+        description: 用户名
+      operating_status:
+        type: string
+        enum:
+        - 'ONLINE'
+        - 'ERROR'
+        - 'PENDING'
+        description: 操作状态，包括"ONLINE、 ERROR、 PENDING"
+      loadbalancers:
+        items:
+          $ref: '#/definitions/respons_loadbalancers'
+        description: 监听器返回监听器信息
+        type: array
+      timeout_client_data:
+        type: string
+        description: 监听器客户端超时时间
+        default: 50000
+      timeout_member_connect:
+        type: string
+        description: 后端成员的超时时间
+        default: 5000
+      timeout_member_data:
+        type: string
+        description: 后端成员连接不活动的超时时间
+        default: 50000
+      timeout_tcp_inspect:
+        type: string
+        description: 额外数据进行检查的时间
+        default: 0
+      
+  
+  respons_loadbalancers:
+    type: object
+    properties:
+      id:
+        type: string
+        description: 负载均衡器ID信息 
+        
+        
+  
+  ##pools
+  request.CreatePoolsRequest:
+    type: object
+    properties:
+      pools:
+        $ref: '#/definitions/request.Pools'
+        description: 监听器详情
+  
+  request.Pools:
+    type: object
+    required:
+    - protocol
+    - lb_algorithm
+    properties:
+      project_id:
+        type: string
+        description: 项目ID
+      protocol:
+        type: string
+        description: 监听器监听协议
+        default: 'TCP'
+      name:
+        type: string
+        description: 用户名
+      lb_algorithm:
+        type: string
+        description: 算法名称
+        enum:
+        - "ROUND_ROBIN"
+        - "LEAST_CONNECTIONS"
+        - "SOURCE_IP"
+      listener_id:
+        type: string
+        description: 监听器ID
+      
+  request.PutPoolsRequest:
+    type: object
+    properties:
+      pools:
+        $ref: '#/definitions/request.PutPools'
+        description: 监听器详情
+       
+        
+  request.PutPools:
+    type: object
+    required:
+    - lb_algorithm
+    properties:
+      name:
+        type: string
+        description: 用户名
+      description:
+        type: string
+        description: 描述信息
+      lb_algorithm:
+        type: string
+        description: 算法名称
+        enum:
+        - "ROUND_ROBIN"
+        - "LEAST_CONNECTIONS"
+        - "SOURCE_IP"
+   
+      
+      
+  
+  response.SimpleResponse_model.Pools:
+    type: object
+    properties:
+      pools:
+        items:
+          $ref: '#/definitions/Pools'
+        description: 监听器详情
+        type: array
+  Pools:
+    type: object
+    properties:
+      id:
+        type: string
+        description: 监听器的ID
+      project_id:
+        type: string
+        description: 项目ID
+      protocol:
+        type: string
+        description: 监听器协议类型
+        enum:
+        - 'TCP'
+        - 'UDP'
+        default: 'TCP'
+      lb_algorithm:
+        type: string
+        description: 负载算法名称
+        enum:
+        - "ROUND_ROBIN"
+        - "LEAST_CONNECTIONS"
+        - "SOURCE_IP"
+        default: 'ROUND_ROBIN'
+      provisioning_status:
+        type: string
+        description: 监听器的资源状态
+        enum:
+        - 'ACTIVE'
+        - 'DELETED'
+        - 'ERROR'
+        - 'PENDING_CREATE'
+        - 'PENDING_UPDATE'
+        - 'PENDING_DELETE'
+      healthmonitor_id:
+        type: string
+        description: 健康检查ID
+      name:
+        type: string
+        description: 用户名
+      operating_status:
+        type: string
+        enum:
+        - 'ONLINE'
+        - 'ERROR'
+        - 'PENDING'
+        description: 操作状态，包括"ONLINE、 ERROR、 PENDING"
+      loadbalancers:
+        items:
+          $ref: '#/definitions/respons_loadbalancers'
+        description: 负载均衡ID信息
+        type: array
+      listeners:
+        items:
+          $ref: '#/definitions/respons_listeners'
+        description: 监听器ID信息
+        type: array
+      members:
+        items:
+          $ref: '#/definitions/respons_members'
+        description: 后端成员ID信息
+        type: array
+      session_persistence:
+        $ref: '#/definitions/session_persistence'
+        description: 后端成员ID信息
+        
+        
+  ##members
+  request.CreateMembersRequest:
+    type: object
+    properties:
+      members:
+        $ref: '#/definitions/request.Members'
+        description: 后端资源池详情
+  
+  request.Members:
+    type: object
+    required:
+    - address
+    - protocol_port
+    properties:
+      project_id:
+        type: string
+        description: 项目ID
+      address:
+        type: string
+        description: 后端地址
+        default: '192.168.100.20'
+      protocol_port:
+        type: string
+        description: 后端端口
+        default: '8080'
+      name:
+        type: string
+        description: 用户名
+      weight:
+        type: string
+        description: 后端调度权重值
+        default: "1~255"
+      
+  request.PuMembersRequest:
+    type: object
+    properties:
+      memebrs:
+        $ref: '#/definitions/request.PutMembers'
+        description: 后端资源池详情
+       
+        
+  request.PutMembers:
+    type: object
+    properties:
+      name:
+        type: string
+        description: 用户名
+      weight:
+        type: string
+        description: 后端调度权重值
+        default: "1~255"    
+      
+  
+  response.SimpleResponse_model.Members:
+    type: object
+    properties:
+      members:
+        items:
+          $ref: '#/definitions/Members'
+        description: 监听器详情
+        type: array
+  Members:
+    type: object
+    properties:
+      id:
+        type: string
+        description: 监听器的ID
+      project_id:
+        type: string
+        description: 项目ID
+      address:
+        type: string
+        description: 后端地址
+        default: '192.168.100.20'
+      protocol_port:
+        type: string
+        description: 后端端口
+        default: '8080'
+      name:
+        type: string
+        description: 用户名
+      weight:
+        type: string
+        description: 后端调度权重值
+        default: "1~255"
+      provisioning_status:
+        type: string
+        description: 监听器的资源状态
+        enum:
+        - 'ACTIVE'
+        - 'DELETED'
+        - 'ERROR'
+        - 'PENDING_CREATE'
+        - 'PENDING_UPDATE'
+        - 'PENDING_DELETE'
+      operating_status:
+        type: string
+        enum:
+        - 'ONLINE'
+        - 'ERROR'
+        - 'PENDING'
+        description: 操作状态，包括"ONLINE、 ERROR、 PENDING"
+        
+        
+  ##healthcheck
+  request.CreateHealthChecksRequest:
+    type: object
+    properties:
+      healthmonitor:
+        $ref: '#/definitions/request.HealthChecks'
+        description: 健康检查详情
+  
+  request.HealthChecks:
+    type: object
+    required:
+    - address
+    - protocol_port
+    properties:
+      project_id:
+        type: string
+        description: 项目ID
+      pool_id:
+        type: string
+        description: 资源池ID信息
+      delay:
+        type: number
+        description: 向成员发送探测之间的时间（以秒为单位）
+        default: '10'
+      name:
+        type: string
+        description: 用户名
+      max_retries:
+        type: string
+        description: 检查是否在线的尝试次数
+        default: "3"
+      type:
+        type: string
+        description: 健康检查协议类型
+        enum:
+        - "TCP"
+        - "UDP-CONNECT"
+      timeout:
+        type: string
+        description: 监视器在超时之前等待连接的最长时间（以秒为单位）。 该值必须小于delay值
+        default: "5"
+      max_retries_down:
+        type: string
+        description: 在将成员的操作状态更改为 ERROR 之前允许的检查失败次数。 有效值为 1 到 10。
+        default: "3"
+      
+  request.PuHealthChecksRequest:
+    type: object
+    properties:
+      healthmonitor:
+        $ref: '#/definitions/request.PutHealthChecks'
+        description: 后端资源池详情
+       
+        
+  request.PutHealthChecks:
+    type: object
+    properties:
+      name:
+        type: string
+        description: 用户名
+      max_retries:
+        type: string
+        description: 检查是否在线的尝试次数
+        default: "3"
+      type:
+        type: string
+        description: 健康检查协议类型
+        enum:
+        - "TCP"
+        - "UDP-CONNECT"
+      timeout:
+        type: string
+        description: 监视器在超时之前等待连接的最长时间（以秒为单位）。 该值必须小于delay值
+        default: "5"
+      max_retries_down:
+        type: string
+        description: 在将成员的操作状态更改为 ERROR 之前允许的检查失败次数。 有效值为 1 到 10。
+        default: "3"    
+      
+  
+  response.SimpleResponse_model.HealthChecks:
+    type: object
+    properties:
+      healthmonitor:
+        items:
+          $ref: '#/definitions/HealthChecks'
+        description: 监听器详情
+        type: array
+  HealthChecks:
+    type: object
+    properties:
+      id:
+        type: string
+        description: 监听器的ID
+      project_id:
+        type: string
+        description: 项目ID
+      provisioning_status:
+        type: string
+        description: 监听器的资源状态
+        enum:
+        - 'ACTIVE'
+        - 'DELETED'
+        - 'ERROR'
+        - 'PENDING_CREATE'
+        - 'PENDING_UPDATE'
+        - 'PENDING_DELETE'
+      name:
+        type: string
+        description: 用户名
+      operating_status:
+        type: string
+        enum:
+        - 'ONLINE'
+        - 'ERROR'
+        - 'PENDING'
+        description: 操作状态，包括"ONLINE、 ERROR、 PENDING"
+      pools:
+        items:
+          $ref: '#/definitions/respons_pools'
+        description: 资源池ID信息
+        type: array
+      max_retries:
+        type: string
+        description: 检查是否在线的尝试次数
+        default: "3"
+      type:
+        type: string
+        description: 健康检查协议类型
+        enum:
+        - "TCP"
+        - "UDP-CONNECT"
+      timeout:
+        type: string
+        description: 监视器在超时之前等待连接的最长时间（以秒为单位）。 该值必须小于delay值
+        default: "5"
+      max_retries_down:
+        type: string
+        description: 在将成员的操作状态更改为 ERROR 之前允许的检查失败次数。 有效值为 1 到 10。
+        default: "3"
